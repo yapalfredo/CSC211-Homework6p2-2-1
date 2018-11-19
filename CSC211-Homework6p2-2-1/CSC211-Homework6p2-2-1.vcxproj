@@ -115,6 +115,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="MyMode.cpp" />
+    <ClCompile Include="MyModeTest.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="MyMode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
