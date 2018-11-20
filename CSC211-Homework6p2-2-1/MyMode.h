@@ -2,6 +2,9 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -17,20 +20,20 @@ private:
 	int arr[SIZE];
 
 	//GETS CALLED TO INITIALIZE THE ELEMENTS IN THE ARRAY
-	void initArray();
-
+	void initArray(fstream&);
 public:
 	//CONSTRUCTOR
 	MyMode();
+	MyMode(fstream&);
 
 	//DESTRUCTOR
 	~MyMode();
 
 	//DISPLAY THE VALUES IN THE ARRAY
-	void printArray() const;
+	void printArray(fstream&) const;
 
 	//LOOK FOR THE MODAL VALUE IN THE ARRAY
-	const void lookForMode();
+	const void lookForMode(fstream&);
 
 	//A FUNCTION FOR CHECKING THE TEMP ARRAY IF A VALUE
 	//HAS ALREADY BEEN COUNTED

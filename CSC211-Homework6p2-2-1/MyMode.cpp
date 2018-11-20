@@ -4,10 +4,12 @@
 MyMode::MyMode()
 {
 	//CONSTRUCTOR
+}
 
-	//FUNCTION CALL TO POPULATE THE ELEMENTS
-	//IN THE ARRAY
-	initArray();
+MyMode::MyMode(fstream& inFile)
+{
+	//CONSTRUCTOR
+	initArray(inFile);
 }
 
 MyMode::~MyMode()
@@ -15,37 +17,58 @@ MyMode::~MyMode()
 	//DESTRUCTOR
 }
 
-void MyMode::initArray()
+void MyMode::initArray(fstream& inFile)
 {
-	//GENERATES RANDOM NUMBERS TO BE ASSIGNED
-	//TO EACH ELEMENT IN THE ARRAY
-	srand(time(NULL));
+		string _input;
+		//use stringstream to 
+		//convert string to int easily
+		stringstream in;	
+		int input = 0, _i = 0;
 
-	for (size_t i = 0; i < SIZE; i++)
-	{
-		*(arr + i) = rand() % RANGE + 1;
-	}
+		if (!inFile)
+		{
+			cout << "Error Opening File" << endl;
+			exit(1);
+		}
+
+		while (!inFile.eof())
+		{
+			getline(inFile, _input, '\n');
+			in << _input;
+			in >> input;
+			*(arr + _i) = input;
+			in.str("");	//empty stringstream
+			in.clear(); //clear stringstream to accept new value
+			_i++;
+		}
+			
+		inFile.close();
 }
 
-void MyMode::printArray() const
+const char * c1 = "The randomly generated array of integers are: \n\n";
+const char * c2 = "[ ";
+const char * c3 = ", ";
+const char * c4 = " ]\n\n";
+
+void MyMode::printArray(fstream& outFile) const
 {
 	//THIS FUNCTION PRINTS ALL VALUES IN THE ARRAY
-	cout << "The randomly generated array of integers are: " << endl << endl;
-	cout << "[ ";
+	cout << c1;	outFile << c1;
+	cout << c2; outFile << c2;
+
 	for (int i = 0; i < SIZE; i++)
 	{
-		cout << *(arr + i);
-
+		cout << *(arr + i); outFile << *(arr + i);
+		
 		if (i < SIZE && i != SIZE - 1)
 		{
-			cout << ", ";
+			cout << c3; outFile << c3;
 		}
 	}
-	cout << " ]";
-	cout << endl << endl;
+	cout << c4; outFile << c4;
 }
 
-const void MyMode::lookForMode()
+const void MyMode::lookForMode(fstream& outFile)
 {
 	//THIS FUNCTION WILL LOOK FOR MODE IN THE ARRAY
 
@@ -76,14 +99,17 @@ const void MyMode::lookForMode()
 		if (*(tempArr + i) > 0)
 		{
 			cout << i + 1 << " occured " << *(tempArr + i);
+			outFile << i + 1 << " occured " << *(tempArr + i);
 
 			if (*(tempArr + i) > 1)
 			{
 				cout << " times" << endl;
+				outFile << " times" << endl;
 			}
 			else
 			{
 				cout << " time " << endl;
+				outFile << " time " << endl;
 			}
 		}
 	}
@@ -92,6 +118,7 @@ const void MyMode::lookForMode()
 	//////////////////////////////////////////////////////////////
 	//SET MODE(S)
 	cout << endl << "The mode(s) is/are: " << endl;
+	outFile << endl << "The mode(s) is/are: " << endl;
 	bool greaterOrEqual;
 	for (int i = 0; i < RANGE; i++)
 	{
@@ -110,6 +137,7 @@ const void MyMode::lookForMode()
 		if (*(tempArr + i) > 1) //WILL ONLY DISPLAY OCCURENCE GREATER THAN 1
 		{
 			cout << i + 1 << "    ";
+			outFile << i + 1 << "    ";
 		}
 	}
 	////////////////////////////////////////////////////////////////
